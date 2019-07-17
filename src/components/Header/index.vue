@@ -1,7 +1,5 @@
 <template>
-    <div>
         <mt-header fixed title="Vue 练习项目"></mt-header>
-    </div>
 </template>
 
 <script>
@@ -11,5 +9,5 @@ export default {
 </script>
 
 <style>
-
+.mint-header.is-fixed{position: static;}
 </style>
