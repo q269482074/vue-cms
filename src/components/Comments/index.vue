@@ -43,8 +43,6 @@ export default {
                 if(res.data.status == 0){
                     if(res.data.comments == ""){
                         let x = document.getElementsByClassName('loading')
-                        x.remove();
-                        
                     }
                     this.comments = this.comments.concat(res.data.comments);
                 }
@@ -56,6 +54,7 @@ export default {
 
 <style lang="scss">
 .comments{
+    
     h2{
         font-size: 18px;
     }
