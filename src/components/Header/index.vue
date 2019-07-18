@@ -1,5 +1,5 @@
 <template>
-        <mt-header fixed title="Vue 练习项目"></mt-header>
+        <mt-header fixed title="vue 练习项目"></mt-header>
 </template>
 
 <script>
