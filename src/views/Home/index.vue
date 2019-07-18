@@ -11,10 +11,10 @@
                 <!-- 6宫格 -->
                 <ul class="mui-table-view mui-grid-view mui-grid-9 ul">
                     <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <a href="#">
+                        <routerLink to="/home/newsList">
                             <img src="../../../public/images/menu1.png" alt="">
                             <div class="mui-media-body">新闻资讯</div>
-                        </a>
+                        </routerLink>
                     </li>
                     <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                         <a href="#">
@@ -47,7 +47,8 @@
                         </a>
                     </li>
                 </ul> 
-                <div>123123</div>
+                <router-view name="newsList"></router-view>
+                <router-view name="newsInfo"></router-view>
             </div>
         <Bottom />
     </div>
@@ -73,7 +74,6 @@ export default {
     },
     mounted() {
         this.axios.get('/index/api/getlunbo').then((res)=>{
-            console.log(res);
             if(res.data.status === 0){
                 this.lunbotuList = res.data.imgList;
             }else{
