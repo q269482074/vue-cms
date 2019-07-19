@@ -13,6 +13,9 @@ Vue.use(MintUI)
 import { Swipe, SwipeItem } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+//全局loading加载组件
+import Loading from '@/components/Loading';
+Vue.component('Loading',Loading);
 
 
 

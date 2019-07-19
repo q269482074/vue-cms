@@ -1,13 +1,23 @@
 <template>
     <div id="newsInfostContriner" class="slider-enter-active">
-        <div class="header">
-            <h2 class="title">{{newsInfo.title}}</h2>
-            <p class="postTime">发表时间 : {{newsInfo.add_time}} <span>点击 : {{newsInfo.click}}次</span></p>
+        <Loading v-if="isLoading" />
+        <div v-else>
+            <!-- <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange"
+            :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore"
+            > -->
+            <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore"
+            >
+            <div class="header">
+                <h2 class="title">{{newsInfo.title}}</h2>
+                <p class="postTime">发表时间 : {{newsInfo.add_time}} <span>点击 : {{newsInfo.click}}次</span></p>
+            </div>
+            <div class="content" v-html="newsInfo.info">
+                
+            </div>
+            <Comments :pageNum="pageNum" @func="show" />
+            </mt-loadmore>
+            <div v-if="allLoaded" style="text-align: center;">加载完毕。。。。</div>
         </div>
-        <div class="content" v-html="newsInfo.info">
-            
-        </div>
-        <Comments />
     </div>
 </template>
 
@@ -19,22 +29,61 @@ export default {
     name : 'NewsInfo',
     data() {
         return {
-            newsInfo : []
+            newsInfo : [],
+            examplename: 'Loadmore',
+            pageNum: 1,//页码
+            InitialLoading: true,//初始加载
+            // list: 0,//数据
+            allLoaded: false,//数据是否加载完毕
+            bottomStatus: '',//底部上拉加载状态
+            wrapperHeight: 0,//容器高度
+            topStatus: '',//顶部下拉加载状态
+            isLoading : true,
         }
     },
-    mounted() {
-        console.log(this.newsList);
-        
-        for(let i=0; i<this.newsList.length; i++){
-            if(this.$route.params.newsId == i){
-                this.newsInfo = this.newsList[i-1];
+    created() {
+        //获取上个路由传来的值
+        this.newsId = this.$route.params.newsId;
+        this.axios.get('/index/api/getnewsinfo?newsId=' + this.newsId).then((res)=>{
+            if(res.data.status == 0){
+                this.isLoading = false;
+                this.newsInfo = res.data.newsList;
             }
-        }
+        });
     },
-    props : ['newsList'],
     components : {
         Comments
-    }
+    },
+    methods: {
+        //上拉加载
+        handleBottomChange(status) {
+                this.bottomStatus = status;
+            },
+        loadBottom() {
+            this.handleBottomChange("loading");//上拉时 改变状态码
+            this.pageNum += 1;
+            setTimeout(() => {
+                this.handleBottomChange("loadingEnd");//数据加载完毕 修改状态码
+                this.$refs.loadmore.onBottomLoaded()
+            }, 1500);
+        },
+        //下拉刷新
+        // handleTopChange(status) {
+        //     this.topStatus = status;
+        // },
+        // loadTop() {//下拉刷新 模拟数据请求这里为了方便使用一次性定时器
+        //     this.handleTopChange("loading");//下拉时 改变状态码
+        //     this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+        //     setTimeout(() => {
+        //         // this.list = 12;//下拉刷新 数据初始化
+        //         this.handleTopChange("loadingEnd")//数据加载完毕 修改状态码
+        //         this.$refs.loadmore.onTopLoaded();
+        //     }, 1500);
+        // },
+        show(data){
+            this.allLoaded = data;
+        }
+    },
 }
 </script>
 

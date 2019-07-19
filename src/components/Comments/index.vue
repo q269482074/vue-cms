@@ -15,8 +15,7 @@
                 </div>
             </div>
         </div>
-
-        <mt-button type="danger" class="loading" size="large" plain @click="getpage">加载更多</mt-button>
+        <!-- <mt-button type="danger" class="loading" size="large" plain @click="getpage">加载更多</mt-button> -->
     </div>
 </template>
 
@@ -26,27 +25,35 @@ export default {
     data() {
         return {
             comments : [],
-            page : 1
+            page : this.pageNum,
+            id : 0,
+            status : true,
         }
     },
     mounted() {
-        this.axios.get('/index/api/getcomment?page=' + this.page).then((res)=>{
+        this.axios.get('/index/api/getcomment?page=1').then((res)=>{
             if(res.data.status == 0){
                 this.comments = res.data.comments;
             }
         });
     },
-    methods: {
-        getpage(){
-            this.page++;
-            this.axios.get('/index/api/getcomment?page=' + this.page).then((res)=>{
-                if(res.data.status == 0){
-                    if(res.data.comments == ""){
-                        let x = document.getElementsByClassName('loading')
+    props : {
+        pageNum: {}
+    },
+    watch: {
+        pageNum(newVal){
+            this.page = newVal;
+            setTimeout(() => {
+                this.axios.get('/index/api/getcomment?page=' + this.page).then((res)=>{
+                    if(res.data.status == 0){
+                        this.comments = this.comments.concat(res.data.comments);
+                        if(res.data.comments == '')
+                        {
+                            this.$emit("func",this.status);
+                        }
                     }
-                    this.comments = this.comments.concat(res.data.comments);
-                }
-            });
+                });
+            }, 1400);
         }
     },
 }
@@ -54,7 +61,7 @@ export default {
 
 <style lang="scss">
 .comments{
-    
+
     h2{
         font-size: 18px;
     }
