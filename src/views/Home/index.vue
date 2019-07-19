@@ -48,7 +48,6 @@
                     </li>
                 </ul> 
                 <router-view name="newsList"></router-view>
-                <router-view name="newsInfo"></router-view>
             </div>
         <Bottom />
     </div>
