@@ -16,8 +16,15 @@ export default {
                         newsInfo : () => import('@/components/NewsInfo')
                     },
                 }
-            ]
+            ],
+           
         },
-       
+        {
+            path : 'potoImg',
+            components : {
+                default : () => import('@/views/Home'),
+                potoImg : () => import('@/components/PotoImg'),
+            },
+        }
     ]
 }
