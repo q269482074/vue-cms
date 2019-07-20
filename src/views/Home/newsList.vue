@@ -44,11 +44,11 @@ export default {
 
 <style scpoed>
 #newsListContriner{position: absolute; left: 0; top: 0; z-index: 10; width: 100%; min-height: 100%; background: #ffffff;}
-#newsListContriner.slider-enter-active{animation: 0.3s sliderHome;}
+/* #newsListContriner.slider-enter-active{animation: 0.3s sliderHome;}
 @keyframes sliderHome {
     0%{transform: translateX(100%)}
     100%{transform: translatex(0%)}
-}
+} */
 
 .mui-table-view .mui-table-view-cell .mui-media-body .mui-ellipsis{
     color: #5B9AFA;

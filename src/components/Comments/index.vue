@@ -2,8 +2,8 @@
     <div class="comments">
         <h2>发表评论</h2>
         <hr>
-        <textarea placeholder="请输入要bb的内容(最多120个字)" maxlength="120"></textarea>
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <textarea placeholder="请输入要bb的内容(最多120个字)" maxlength="120" v-model="content"></textarea>
+        <mt-button type="primary" size="large" @click="postComments">发表评论</mt-button>
 
         <div class="cmt-list">
             <div class="cmt-item" v-for="item in comments" :key="item.id">
@@ -28,6 +28,7 @@ export default {
             page : this.pageNum,
             id : 0,
             status : true,
+            content : ''
         }
     },
     mounted() {
@@ -39,6 +40,31 @@ export default {
     },
     props : {
         pageNum: {}
+    },
+    methods: {
+        postComments(){
+            //对数据进行整理
+            let postData = this.qs.stringify({
+                    content: this.content,
+                    username : '匿名用户'
+                });
+
+            this.axios({
+                method: 'post',
+                url: '/index/api/setcomment',
+                data: postData
+            }).then((res)=>{
+                let cmt = {
+                    username : res.data.comments.username,
+                    add_time : res.data.comments.add_time,
+                    content : res.data.comments.content
+                }
+                //把评论加入到第一条
+                this.comments.unshift(cmt);
+                //清空评论
+                this.content = '';
+            });
+        }
     },
     watch: {
         pageNum(newVal){
