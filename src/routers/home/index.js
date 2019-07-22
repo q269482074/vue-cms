@@ -25,6 +25,19 @@ export default {
                 default : () => import('@/views/Home'),
                 potoImg : () => import('@/components/PotoImg'),
             },
-        }
+            children : [
+                {
+                    path : 'imgInfo/:imgId',
+                    components : {
+                        default : () => import('@/components/PotoImg'),
+                        imgInfo : () => import('@/components/ImgInfo'),
+                    },
+                }
+            ]
+        },
+        // {
+        //     path : '/home/imgInfo/:imgId',
+        //     component : () => import('@/components/ImgInfo')
+        // }
     ]
 }

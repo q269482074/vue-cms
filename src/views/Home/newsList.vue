@@ -1,6 +1,6 @@
 <template>
     <div id="newsListContriner" class="slider-enter-active">
-         <Loading v-if="isLoading" />
+        <Loading v-if="isLoading" />
         <ul v-else class="mui-table-view">  
             <li class="mui-table-view-cell mui-media" v-for="item in newsList" :key="item.id" @tap="handleToNewsInfo(item.id)">
                 <a href="javascript:;">
@@ -11,8 +11,8 @@
                     </div>
                 </a>
             </li>
-        <router-view name="newsInfo"></router-view>
         </ul>
+        <router-view name="newsInfo"></router-view>
     </div>
 </template>
 

@@ -47,8 +47,12 @@
                         </a>
                     </li>
                 </ul> 
-                <router-view name="newsList"></router-view>
-                <router-view name="potoImg"></router-view>
+                <keep-alive>
+                    <router-view name="newsList"></router-view>
+                </keep-alive>
+                <keep-alive>
+                    <router-view name="potoImg"></router-view>
+                </keep-alive>
             </div>
         <Bottom />
     </div>

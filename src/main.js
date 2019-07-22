@@ -23,6 +23,9 @@ Vue.component('Loading',Loading);
 //全局swipre组件挂载
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 Vue.use(VueAwesomeSwiper);
+//全局屏幕滑动组件
+import Scroller from '@/components/Scroller';
+Vue.component('Scroller',Scroller);
 
 
 
